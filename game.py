@@ -1,18 +1,24 @@
+import random
 from quiz import Quiz
 
 class QuizGame:
     def __init__(self):
         self.quizzes = []
+        self.best_score = {"correct": 0, "total": 0, "percent": 0}
 
     def run(self):
         while True:
             self.show_menu()
             menu_number = self.get_int_input("선택: ", 1, 5)
 
-            if menu_number == 2:
+            if menu_number == 1:
+                self.play_quiz()
+            elif menu_number == 2:
                 self.add_quiz()
             elif menu_number == 3:
                 self.show_quiz_list()
+            elif menu_number == 4:
+                self.show_best_score()
             elif menu_number == 5:
                 print("\n프로그램을 종료합니다.")
                 break
@@ -22,6 +28,46 @@ class QuizGame:
         print("        🎯 나만의 Python 퀴즈 게임 🎯")
         print("=" * 48)
         print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 퀴즈 목록\n4. 점수 확인\n5. 종료")
+        print("=" * 48)
+
+    def play_quiz(self):
+        if not self.quizzes:
+            print("\n등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해주세요.")
+            return
+
+        questions = self.quizzes[:]
+        random.shuffle(questions)
+
+        print(f"\n📝 퀴즈를 시작합니다! (총 {len(questions)}문제)")
+        correct_count = 0
+
+        for index, quiz in enumerate(questions, start=1):
+            print("\n" + "-" * 40)
+            quiz.display(index=index)
+            user_answer = self.get_int_input("정답 입력 (1-4): ", 1, 4)
+
+            if quiz.is_correct(user_answer):
+                print("✅ 정답입니다!")
+                correct_count += 1
+            else:
+                correct_text = quiz.choices[quiz.answer - 1]
+                print(f"❌ 오답입니다. 정답은 {quiz.answer}번 ({correct_text}) 입니다.")
+
+        total_count = len(questions)
+        percent = int((correct_count / total_count) * 100) if total_count else 0
+
+        print("\n" + "=" * 48)
+        print(f"🏆 결과: {total_count}문제 중 {correct_count}문제 정답! ({percent}점)")
+
+        if self.is_new_best_score(correct_count, total_count, percent):
+            self.best_score = {
+                "correct": correct_count,
+                "total": total_count,
+                "percent": percent,
+            }
+            print("🎉 새로운 최고 점수입니다!")
+        else:
+            print("🙂 최고 점수는 그대로 유지됩니다.")
         print("=" * 48)
 
     def add_quiz(self):
@@ -46,6 +92,23 @@ class QuizGame:
         for index, quiz in enumerate(self.quizzes, start=1):
             print(f"[{index}] {quiz.question}")
         print("-" * 48)
+
+    def show_best_score(self):
+        if self.best_score["total"] == 0:
+            print("\n아직 퀴즈를 풀지 않았습니다.")
+            return
+        print(
+            "\n🏆 최고 점수: "
+            f"{self.best_score['percent']}점 "
+            f"({self.best_score['total']}문제 중 {self.best_score['correct']}문제 정답)"
+        )
+
+    def is_new_best_score(self, correct, total, percent):
+        current_percent = self.best_score.get("percent", 0)
+        current_correct = self.best_score.get("correct", 0)
+        if percent > current_percent: return True
+        if percent == current_percent and correct > current_correct: return True
+        return False
 
     def safe_input(self, prompt):
         return input(prompt)
