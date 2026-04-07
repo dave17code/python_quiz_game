@@ -3,6 +3,9 @@ import random
 from pathlib import Path
 from quiz import Quiz
 
+class SafeExitRequested(Exception):
+    pass
+
 class QuizGame:
     def __init__(self, state_path="state.json"):
         self.state_path = Path(state_path)
@@ -11,22 +14,26 @@ class QuizGame:
         self.load_state()
 
     def run(self):
-        while True:
-            self.show_menu()
-            menu_number = self.get_int_input("선택: ", 1, 5)
+        try:
+            while True:
+                self.show_menu()
+                menu_number = self.get_int_input("선택: ", 1, 5)
 
-            if menu_number == 1:
-                self.play_quiz()
-            elif menu_number == 2:
-                self.add_quiz()
-            elif menu_number == 3:
-                self.show_quiz_list()
-            elif menu_number == 4:
-                self.show_best_score()
-            elif menu_number == 5:
-                self.save_state()
-                print("\n프로그램을 종료합니다. 저장이 완료되었습니다.")
-                break
+                if menu_number == 1:
+                    self.play_quiz()
+                elif menu_number == 2:
+                    self.add_quiz()
+                elif menu_number == 3:
+                    self.show_quiz_list()
+                elif menu_number == 4:
+                    self.show_best_score()
+                elif menu_number == 5:
+                    self.save_state()
+                    print("\n프로그램을 종료합니다. 저장이 완료되었습니다.")
+                    break
+        except SafeExitRequested:
+            print("\n입력이 중단되었습니다. 가능한 범위까지 저장한 뒤 안전하게 종료합니다.")
+            self.save_state()
 
     def show_menu(self):
         print("\n" + "=" * 48)
@@ -121,7 +128,11 @@ class QuizGame:
         except OSError:
             pass
 
-    def safe_input(self, prompt): return input(prompt)
+    def safe_input(self, prompt):
+        try:
+            return input(prompt)
+        except (KeyboardInterrupt, EOFError):
+            raise SafeExitRequested
 
     def get_nonempty_input(self, prompt):
         while True:
