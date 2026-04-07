@@ -163,5 +163,13 @@ class QuizGame:
     def default_quizzes(self):
         return [
             Quiz("Python에서 리스트를 만들 때 사용하는 기호는?", ["{}", "[]", "()", "<>"], 2),
-            Quiz("함수를 정의할 때 사용하는 키워드는?", ["class", "lambda", "def", "try"], 3),
+            Quiz("Python에서 문자열 자료형의 이름은 무엇인가요?", ["int", "bool", "str", "list"], 3),
+            Quiz("조건에 따라 다른 코드를 실행할 때 사용하는 키워드는?", ["for", "if", "import", "return"], 2),
+            Quiz("반복문으로 리스트의 요소를 하나씩 꺼낼 때 사용하는 문장은?", ["while item in list", "for item in list", "if item in list", "def item in list"], 2),
+            Quiz("함수를 정의할 때 사용하는 키워드는 무엇인가요?", ["class", "lambda", "def", "try"], 3),
+            Quiz("예외 처리를 할 때 함께 사용하는 구문 조합으로 알맞은 것은?", ["if / else", "for / while", "try / except", "class / self"], 3),
+            Quiz("데이터를 키(Key)와 값(Value)의 쌍으로 저장하는 자료형은?", ["tuple", "list", "set", "dict"], 4),
+            Quiz("화면에 결과값을 출력할 때 사용하는 내장 함수는?", ["input()", "print()", "show()", "display()"], 2),
+            Quiz("리스트나 문자열의 길이를 구할 때 사용하는 함수는?", ["len()", "size()", "count()", "length()"], 1),
+            Quiz("파이썬의 창시자 이름은 무엇인가요?", ["Linus Torvalds", "James Gosling", "Guido van Rossum", "Brendan Eich"], 3),
         ]
