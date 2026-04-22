@@ -46,3 +46,8 @@ python main.py
 ---
 
 **💡 Tip**: `state.json` 파일이 없더라도 실행 시 자동으로 기본 10문제가 생성되어 안전하게 시작할 수 있습니다.
+
+<img width="689" height="452" alt="quiz start" src="https://github.com/user-attachments/assets/23498506-a4ce-4ab3-932c-452bd2dd2003" />
+<img width="1056" height="393" alt="quiz add" src="https://github.com/user-attachments/assets/368aba20-ad0a-4df3-82ce-252b10c86c3a" />
+<img width="944" height="423" alt="quiz list" src="https://github.com/user-attachments/assets/3c1e5937-aa71-4cfe-9379-8d4d7a48b074" />
+<img width="474" height="248" alt="score check" src="https://github.com/user-attachments/assets/06413748-8057-4580-9382-bb42f5c4a287" />
